@@ -40,7 +40,7 @@ public class Main {
 		} else {
 			MainLogic.GameRule.Game.Save = false;
 		}
-		MainLogic.setup();
-		MainLogic.play();
+		
+    		MainMenu.show();
 	}
 }

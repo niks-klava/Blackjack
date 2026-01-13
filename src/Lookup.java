@@ -71,6 +71,10 @@ public class Lookup {
 				Text.Dealer_Wins = "Dealer won";
 				// Buttons
 				Text.Title = "BlackJack";
+
+				Text.Play = "Spēlēt";
+				Text.ViewResult = "Apskatīt Leaderboard";
+				Text.Exit = "Iziet";
 			}
 
 			public static void Latv() {
@@ -104,6 +108,10 @@ public class Lookup {
 				Text.Dealer_Wins = "Dīleris uzvarēja";
 				// Pogas
 				Text.Title = "Laipni lūdzam BlackJack spēlē";
+
+				Text.Play = "Spēlēt";
+				Text.ViewResult = "Apskatīt Leaderboard";
+				Text.Exit = "Iziet";
 
 			}
 		}
