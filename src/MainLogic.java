@@ -5,6 +5,8 @@ import javax.swing.JOptionPane;
 public class MainLogic {
 
 	static int maxMoney;
+	static int roundWins;
+	static int roundLosses;
 
 	static int parseInt(String var) {
 		int num = -1;
@@ -151,6 +153,8 @@ public class MainLogic {
 		GameRule.Player.money = 10;
 		GameRule.Player.Score = 0;
 		maxMoney = GameRule.Player.money;
+		roundWins = 0;
+    	roundLosses = 0;
 	}
 
 	public static void play() {
@@ -166,7 +170,7 @@ public class MainLogic {
 		// {System.out.println(cards.card_deck[i]+" "+cards.card_value[i]);}//shuffle
 		// debug
 		int stop = 1;
-		int a, score = 0;
+		int a;
 		int dealer_points = 0;
 		int bet = 0;
 		do {
@@ -224,7 +228,7 @@ public class MainLogic {
 							JOptionPane.INFORMATION_MESSAGE);
 					if (dealer_points > GameRule.Game.MaxGamePoints) {
 						JOptionPane.showMessageDialog(null, Lookup.BlackJack.Lang.Text.Player_Wins + "\n\n");
-						score = score + 1;
+						roundWins++;
 						GameRule.Player.money = GameRule.Player.money + bet;
 						if (GameRule.Player.money > maxMoney) {
 							maxMoney = GameRule.Player.money;
@@ -232,7 +236,7 @@ public class MainLogic {
 					} else {
 						if (dealer_points >= GameRule.Player.Points) {
 							JOptionPane.showMessageDialog(null, Lookup.BlackJack.Lang.Text.Dealer_Wins + "\n\n");
-							score = score - 1;
+							roundLosses++;
 							GameRule.Player.money = GameRule.Player.money - bet;
 							if (GameRule.Player.money > maxMoney) {
 								maxMoney = GameRule.Player.money;
@@ -240,7 +244,7 @@ public class MainLogic {
 
 						} else {
 							JOptionPane.showMessageDialog(null, Lookup.BlackJack.Lang.Text.Player_Wins + "\n\n");
-							score = score + 1;
+							roundWins++;
 							GameRule.Player.money = GameRule.Player.money + bet;
 							if (GameRule.Player.money > maxMoney) {
 								maxMoney = GameRule.Player.money;
@@ -249,7 +253,7 @@ public class MainLogic {
 					}
 				} else {
 					JOptionPane.showMessageDialog(null, Lookup.BlackJack.Lang.Text.Dealer_Wins + "\n\n");
-					score = score - 1;
+					roundLosses++;
 					GameRule.Player.money = GameRule.Player.money - bet;
 					if (GameRule.Player.money > maxMoney) {
 						maxMoney = GameRule.Player.money;
@@ -263,12 +267,14 @@ public class MainLogic {
 			}
 		} while (stop == 1);
 
-		boolean win = score > 0;
-
-		Leaderboard.updatePlayer(
-				GameRule.Player.Name,
-				win,
-				maxMoney,
-				GameRule.Player.money);
+		if (GameRule.Game.Save) {
+    Leaderboard.updatePlayer(
+            GameRule.Player.Name,
+            roundWins,
+            roundLosses,
+            maxMoney,
+            GameRule.Player.money
+    );
+}
 	}
 }

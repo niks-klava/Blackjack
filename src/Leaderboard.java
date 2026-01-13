@@ -64,25 +64,31 @@ public class Leaderboard {
         }
     }
 
-    public static void updatePlayer(String name, boolean win, int maxMoney, int endMoney) {
-        Map<String, PlayerStats> map = load();
-        PlayerStats ps = map.get(name);
+    public static void updatePlayer(
+        String name,
+        int wins,
+        int losses,
+        int maxMoney,
+        int endMoney
+) {
+    Map<String, PlayerStats> map = load();
 
-        if (ps == null) {
-            ps = new PlayerStats(name, 0, 0, 0, maxMoney, endMoney);
-        }
-
-        ps.played++;
-        if (win) ps.wins++;
-        else ps.losses++;
-
-        if (maxMoney > ps.maxMoney) {
-            ps.maxMoney = maxMoney;
-        }
-
-        ps.endMoney = endMoney;
-
-        map.put(name, ps);
-        save(map);
+    PlayerStats ps = map.get(name);
+    if (ps == null) {
+        ps = new PlayerStats(name, 0, 0, 0, maxMoney, endMoney);
     }
+
+    ps.played += wins + losses;
+    ps.wins += wins;
+    ps.losses += losses;
+
+    if (maxMoney > ps.maxMoney) {
+        ps.maxMoney = maxMoney;
+    }
+
+    ps.endMoney = endMoney;
+
+    map.put(name, ps);
+    save(map);
+}
 }
