@@ -3,6 +3,9 @@ import java.util.Arrays;
 import javax.swing.JOptionPane;
 
 public class MainLogic {
+
+	static int maxMoney;
+
 	static int parseInt(String var) {
 		int num = -1;
 		try {
@@ -147,6 +150,7 @@ public class MainLogic {
 		GameRule.Dealer.WhenStop = 14;
 		GameRule.Player.money = 10;
 		GameRule.Player.Score = 0;
+		maxMoney = GameRule.Player.money;
 	}
 
 	public static void play() {
@@ -222,21 +226,35 @@ public class MainLogic {
 						JOptionPane.showMessageDialog(null, Lookup.BlackJack.Lang.Text.Player_Wins + "\n\n");
 						score = score + 1;
 						GameRule.Player.money = GameRule.Player.money + bet;
+						if (GameRule.Player.money > maxMoney) {
+							maxMoney = GameRule.Player.money;
+						}
 					} else {
 						if (dealer_points >= GameRule.Player.Points) {
 							JOptionPane.showMessageDialog(null, Lookup.BlackJack.Lang.Text.Dealer_Wins + "\n\n");
 							score = score - 1;
 							GameRule.Player.money = GameRule.Player.money - bet;
+							if (GameRule.Player.money > maxMoney) {
+								maxMoney = GameRule.Player.money;
+							}
+
 						} else {
 							JOptionPane.showMessageDialog(null, Lookup.BlackJack.Lang.Text.Player_Wins + "\n\n");
 							score = score + 1;
 							GameRule.Player.money = GameRule.Player.money + bet;
+							if (GameRule.Player.money > maxMoney) {
+								maxMoney = GameRule.Player.money;
+							}
 						}
 					}
 				} else {
 					JOptionPane.showMessageDialog(null, Lookup.BlackJack.Lang.Text.Dealer_Wins + "\n\n");
 					score = score - 1;
 					GameRule.Player.money = GameRule.Player.money - bet;
+					if (GameRule.Player.money > maxMoney) {
+						maxMoney = GameRule.Player.money;
+					}
+
 				}
 				// System.out.println(Lookup.BlackJack.Lang.Text.Continue);
 			} else {
@@ -244,6 +262,13 @@ public class MainLogic {
 				JOptionPane.showMessageDialog(null, Lookup.BlackJack.Lang.Text.YOU_LOST);
 			}
 		} while (stop == 1);
-		// if(Save==true){Save_To_File(.....)}
+
+		boolean win = score > 0;
+
+		Leaderboard.updatePlayer(
+				GameRule.Player.Name,
+				win,
+				maxMoney,
+				GameRule.Player.money);
 	}
 }
