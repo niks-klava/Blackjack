@@ -2,7 +2,13 @@ public class Lookup {
 	public class BlackJack {
 		public class Lang {
 			public class Text {
+				// Setup texts
+				public static String PlayerName;
+				public static String SaveGame;
+				public static String ConfirmChoice;
 				// Game text
+				public static String Bet;
+				public static String YOU_LOST;
 				public static String PlayerAddsNewCard;
 				public static String DealerAddsNewCard;
 				public static String PlayerCards;
@@ -36,6 +42,13 @@ public class Lookup {
 			}
 
 			public static void Eng() {
+				// Setup texts
+				Text.PlayerName = "Enter your name";
+				Text.SaveGame = "Save your score?";
+				Text.ConfirmChoice = "\n1 Yes\n2 No";
+				// Game Texts
+				Text.Bet = "Bet";
+				Text.YOU_LOST = "YOU LOST";
 				Text.PlayerAddsNewCard = "You picked a new card ";
 				Text.DealerAddsNewCard = "Dealer picked a new card";
 				Text.PlayerCards = "You now have ";
@@ -62,10 +75,16 @@ public class Lookup {
 
 			public static void Latv() {
 				// Spēles teksts
+				// Setup texts
+				Text.PlayerName = "Ievadiet vārdu";
+				Text.SaveGame = "Saglabāt jūsu rezultātu?";
+				Text.ConfirmChoice = "\n1 Jā\n2 Nē";
 				// Game text
-				Text.PlayerAddsNewCard = "Pacēlāt jaunu kārti";
+				Text.Bet = "Likme";
+				Text.YOU_LOST = "Jūs zaudējāt";
+				Text.PlayerAddsNewCard = "Jūs pacēlāt jaunu kārti";
 				Text.DealerAddsNewCard = "Dīleris pacēla jaunu kārti";
-				Text.PlayerCards = "Sūsu kārtis";
+				Text.PlayerCards = "Jūsu kārtis";
 				Text.Not_Allowed = "Darbība nav atļauta";
 				Text.DealersCards = "Dīlera kārtis";
 				Text.DealerHas = "Dīlerim ir ";
