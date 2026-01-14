@@ -3,7 +3,7 @@ import java.util.Arrays;
 import javax.swing.JOptionPane;
 
 public class MainLogic {
-
+	static String[] Log = new String[0];
 	static int maxMoney;
 	static int roundWins;
 	static int roundLosses;
@@ -19,7 +19,6 @@ public class MainLogic {
 	}
 
 	public class TextLog {
-		static String[] Log = new String[0];
 
 		static String[] Log_Delete(String[] Array) {
 			Array = new String[0];
@@ -69,17 +68,17 @@ public class MainLogic {
 				JOptionPane.showMessageDialog(null,
 						Lookup.BlackJack.Lang.Text.PlayerAddsNewCard + " " + cards.card_deck[cards.current],
 						"BlackJack", JOptionPane.INFORMATION_MESSAGE);
-				TextLog.Log_Append(TextLog.Log,
-						Lookup.BlackJack.Lang.Text.PlayerAddsNewCard + " " + cards.card_deck[cards.current]);
+
 				GameRule.Player.Points = GameRule.Player.Points + cards.card_value[cards.current];
+				Log[Log.length - 1] = (cards.card_deck[cards.current] + "\n" + Lookup.BlackJack.Lang.Text.PlayerCards
+						+ " " + GameRule.Player.Points
+						+ " " + Lookup.BlackJack.Lang.Text.Points);
 				cards.current = cards.current + 1;
 				JOptionPane
 						.showMessageDialog(null,
 								Lookup.BlackJack.Lang.Text.PlayerCards + " " + GameRule.Player.Points + " "
 										+ Lookup.BlackJack.Lang.Text.Points,
 								"BlackJack", JOptionPane.INFORMATION_MESSAGE);
-				TextLog.Log_Append(TextLog.Log, Lookup.BlackJack.Lang.Text.PlayerCards + " " + GameRule.Player.Points
-						+ " " + Lookup.BlackJack.Lang.Text.Points);
 			} else {
 				JOptionPane.showMessageDialog(null, Lookup.BlackJack.Lang.Text.Not_Allowed);
 			}
@@ -154,7 +153,7 @@ public class MainLogic {
 		GameRule.Player.Score = 0;
 		maxMoney = GameRule.Player.money;
 		roundWins = 0;
-    	roundLosses = 0;
+		roundLosses = 0;
 	}
 
 	public static void play() {
@@ -175,7 +174,7 @@ public class MainLogic {
 		int bet = 0;
 		do {
 			do {
-				TextLog.Log = TextLog.Log_Delete(TextLog.Log);
+				Log = TextLog.Log_Delete(Log);
 				bet = parseInt(
 						JOptionPane.showInputDialog(GameRule.Player.money + "\n\n" + Lookup.BlackJack.Lang.Text.Bet));
 			} while (bet > GameRule.Player.money);
@@ -185,29 +184,29 @@ public class MainLogic {
 				dealer_points = 0;
 				GameRule.Player.Points = 0;
 				// dealer's hand
-				TextLog.Log = TextLog.Log_Append(TextLog.Log, Lookup.BlackJack.Lang.Text.DealersCards + "\n");
+				Log = TextLog.Log_Append(Log, Lookup.BlackJack.Lang.Text.DealersCards + "\n");
 				for (int i = 0; i < 1; i++) {
-					TextLog.Log = TextLog.Log_Append(TextLog.Log, cards.card_deck[cards.current] + "\n");
+					Log = TextLog.Log_Append(Log, cards.card_deck[cards.current] + "\n");
 					dealer_points = dealer_points + cards.card_value[cards.current];
 					cards.current = cards.current + 1;
 				}
-				TextLog.Log = TextLog.Log_Append(TextLog.Log, Lookup.BlackJack.Lang.Text.DealerHas + " " + dealer_points
+				Log = TextLog.Log_Append(Log, Lookup.BlackJack.Lang.Text.DealerHas + " " + dealer_points
 						+ " " + Lookup.BlackJack.Lang.Text.Points + "\n");
 				// player's hand
-				TextLog.Log = TextLog.Log_Append(TextLog.Log, Lookup.BlackJack.Lang.Text.PlayerCards + "\n");
+				Log = TextLog.Log_Append(Log, Lookup.BlackJack.Lang.Text.PlayerCards + "\n");
 				for (int i = 0; i < 2; i++) {
-					TextLog.Log = TextLog.Log_Append(TextLog.Log, cards.card_deck[cards.current] + "\n");
+					Log = TextLog.Log_Append(Log, cards.card_deck[cards.current] + "\n");
 					GameRule.Player.Points = GameRule.Player.Points + cards.card_value[cards.current];
 					cards.current = cards.current + 1;
 				}
-				TextLog.Log = TextLog.Log_Append(TextLog.Log, Lookup.BlackJack.Lang.Text.YouHave + " "
+				Log = TextLog.Log_Append(Log, Lookup.BlackJack.Lang.Text.YouHave + " "
 						+ GameRule.Player.Points + " " + Lookup.BlackJack.Lang.Text.Points + "\n");
 				a = 1;// game logic
 				while (a == 1) {
-					JOptionPane.showMessageDialog(null, Arrays.toString(TextLog.Log), "BlackJack",
+					JOptionPane.showMessageDialog(null, Arrays.toString(Log), "BlackJack",
 							JOptionPane.INFORMATION_MESSAGE);
 					a = parseInt(JOptionPane.showInputDialog(
-							Arrays.toString(TextLog.Log) + "\n\n1)" + Lookup.BlackJack.Lang.Text.Hit + "\n2)"
+							Arrays.toString(Log) + "\n\n1)" + Lookup.BlackJack.Lang.Text.Hit + "\n2)"
 									+ Lookup.BlackJack.Lang.Text.Stand + "\n3)" + Lookup.BlackJack.Lang.Text.Exit));
 					if (a == 1) {
 						Player_Action.New_Card();
@@ -219,12 +218,12 @@ public class MainLogic {
 				}
 				if (GameRule.Player.Points <= GameRule.Game.MaxGamePoints) {
 					while (dealer_points < GameRule.Dealer.WhenStop) {
-						TextLog.Log = TextLog.Log_Append(TextLog.Log, Lookup.BlackJack.Lang.Text.DealerAddsNewCard + " "
+						Log = TextLog.Log_Append(Log, Lookup.BlackJack.Lang.Text.DealerAddsNewCard + " "
 								+ cards.card_deck[cards.current] + "\n");
 						dealer_points = dealer_points + cards.card_value[cards.current];
 						cards.current = cards.current + 1;
 					}
-					JOptionPane.showMessageDialog(null, Arrays.toString(TextLog.Log), "BlackJack",
+					JOptionPane.showMessageDialog(null, Arrays.toString(Log), "BlackJack",
 							JOptionPane.INFORMATION_MESSAGE);
 					if (dealer_points > GameRule.Game.MaxGamePoints) {
 						JOptionPane.showMessageDialog(null, Lookup.BlackJack.Lang.Text.Player_Wins + "\n\n");
@@ -268,13 +267,12 @@ public class MainLogic {
 		} while (stop == 1);
 
 		if (GameRule.Game.Save) {
-    Leaderboard.updatePlayer(
-            GameRule.Player.Name,
-            roundWins,
-            roundLosses,
-            maxMoney,
-            GameRule.Player.money
-    );
-}
+			Leaderboard.updatePlayer(
+					GameRule.Player.Name,
+					roundWins,
+					roundLosses,
+					maxMoney,
+					GameRule.Player.money);
+		}
 	}
 }

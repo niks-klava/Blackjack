@@ -18,8 +18,7 @@ public class MainMenu {
                 JOptionPane.INFORMATION_MESSAGE,
                 null,
                 options,
-                options[0]
-        );
+                options[0]);
 
         switch (choice) {
             case 0:
